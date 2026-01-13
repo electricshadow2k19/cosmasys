@@ -38,6 +38,13 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        // Show loading state
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+        
         // Get form data
         const formData = {
             name: document.getElementById('name').value,
@@ -46,12 +53,23 @@ if (contactForm) {
             message: document.getElementById('message').value
         };
 
-        // In a real application, you would send this data to a server
-        // For now, we'll just show an alert
-        alert('Thank you for your message! We will get back to you soon.\n\nNote: This is a demo form. In production, this would send an email or API request.');
-        
-        // Reset form
-        contactForm.reset();
+        // Simulate API call
+        setTimeout(() => {
+            // In a real application, you would send this data to a server
+            // For now, we'll just show a success message
+            submitButton.textContent = '✓ Message Sent!';
+            submitButton.style.background = 'rgba(76, 175, 80, 0.9)';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                submitButton.style.background = '';
+            }, 3000);
+        }, 1000);
     });
 }
 
